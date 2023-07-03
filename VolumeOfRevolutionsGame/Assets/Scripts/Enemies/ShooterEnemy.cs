@@ -15,8 +15,8 @@ public class ShooterEnemy : Enemy
     }
 
     // Update is called once per frame
-    void Update() {
-        Move();
+    protected new void Update() {
+        base.Update();
     }
 
     protected override void OnTriggerEnter(Collider other) {

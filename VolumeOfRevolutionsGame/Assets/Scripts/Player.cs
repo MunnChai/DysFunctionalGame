@@ -13,12 +13,15 @@ public class Player : MonoBehaviour
     private float hDashDirection;
     private float vDashDirection;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start() {
         defaultSpeed = 5;
         defaultDashSpeed = 30;
         dashDecel = 0.01f;
         gameObject.tag = "Player";
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
                 hDashDirection = h;
                 vDashDirection = v;
                 dashSpeed = defaultDashSpeed;
+                HandleDashAnimation(h, v);
             }
         }
         if (isDashing) {
@@ -96,5 +100,19 @@ public class Player : MonoBehaviour
         pos.y = y;
 
         transform.position = pos;
+    }
+
+    // Determines which dash animation to play depending on which direction player is dashing
+    private void HandleDashAnimation(float h, float v) {
+        if (h == 0) {
+            animator.SetTrigger("DashVertical");
+        } else if (v == 0) {
+            animator.SetTrigger("DashHorizontal");
+        } else if (h * v > 0) {
+            animator.SetTrigger("DashNorthEast");
+        } else {
+            animator.SetTrigger("DashSouthEast");
+        }
+
     }
 }

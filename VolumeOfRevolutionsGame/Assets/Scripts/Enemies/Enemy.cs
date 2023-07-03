@@ -17,6 +17,12 @@ public abstract class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
+    // Update is called once per frame
+    protected void Update() {
+        Move();
+        DeleteOutOfBounds();
+    }
+
     // Sets the angle that the gameObject will move towards
     protected void SetDirection(Vector3 target) {
         float xDist = player.transform.position.x - transform.position.x;
@@ -39,6 +45,19 @@ public abstract class Enemy : MonoBehaviour
         float ySpeed = speed * Mathf.Sin(angle) * xMultiplier * Time.deltaTime;
         float xSpeed = speed * Mathf.Cos(angle) * xMultiplier * Time.deltaTime;
         transform.position += new Vector3(xSpeed, ySpeed, 0);
+    }
+
+    // Deletes game object when it travels too far off screen
+    protected void DeleteOutOfBounds() {
+        float x = transform.position.x;
+        float y = transform.position.y;
+
+        float distOffscreen = 1; // How far offscreen the enemy will go before being deleted
+
+        if (x > Constants.rightBound + distOffscreen || x < Constants.leftBound - distOffscreen ||
+            y > Constants.topBound + distOffscreen || y < Constants.bottomBound - distOffscreen) {
+                Destroy(gameObject);
+            }
     }
 
     protected abstract void OnTriggerEnter(Collider other);

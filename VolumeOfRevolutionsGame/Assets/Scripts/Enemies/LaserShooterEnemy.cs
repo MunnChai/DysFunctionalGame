@@ -2,22 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletEnemy : Enemy
+public class LaserShooterEnemy : Enemy
 {
+    public GameObject laserPrefab;
+
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
-        speed = 7.5f;
+        speed = 1;
         SetDirection(player.transform.position);
+        InvokeRepeating("ShootLaser", 1, 3);
     }
 
     // Update is called once per frame
-    protected new void Update() {
+    protected new void Update()
+    {
         base.Update();
     }
 
     protected override void OnTriggerEnter(Collider other) {
         // pass
     }
-}
 
+    // Spawns a LaserEnemy on current position
+    private void ShootLaser() {
+        Instantiate(laserPrefab, transform.position, Quaternion.identity);
+    }
+
+    
+}
