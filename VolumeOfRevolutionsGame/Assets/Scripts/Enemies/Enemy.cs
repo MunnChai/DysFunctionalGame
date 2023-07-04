@@ -59,8 +59,6 @@ public abstract class Enemy : MonoBehaviour
                 Destroy(gameObject);
             }
     }
-
-    protected abstract void OnTriggerEnter(Collider other);
 }
 
 

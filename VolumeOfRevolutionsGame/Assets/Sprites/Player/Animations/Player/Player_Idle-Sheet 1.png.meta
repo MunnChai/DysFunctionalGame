@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 473d8ded3aff91f4a95fa09fcf7bba06
+guid: 8d59e2ebaf9d30045b8d56c97257ddb0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Dash-Sheet_0
+      name: Player_Idle-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3735f5cb3cd8e746a9397922594ec12
-      internalID: -1329886274
+      spriteID: 6c2bd712f22baf749b9236b0a0ff4ac9
+      internalID: 441468814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Dash-Sheet_1
+      name: Player_Idle-Sheet 1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 930edd3535fc7f5438ab2520241e2e2b
-      internalID: -1564044325
+      spriteID: b46623e2fd789a64682539afcd31c78b
+      internalID: 412952066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Dash-Sheet_2
+      name: Player_Idle-Sheet 1_2
       rect:
         serializedVersion: 2
         x: 64
@@ -173,134 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 754380ada99ca3f4cae4682623a1af69
-      internalID: -2064358673
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e38c9b47e14fb614d8aa6540fe88eb48
-      internalID: -314285250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8d29c3d33d3f38469b3a654edc74c61
-      internalID: -122931407
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cb97411aad8f05648b573db2693d5e15
-      internalID: -501663944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f7f6ee16ca39fb04b9570b28085eab41
-      internalID: 875017640
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6fbd894eae61a3b4893e4193c8398351
-      internalID: 1148669152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Dash-Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e3ee3e5ad2e4374aa11836e7596394e
-      internalID: -1327229701
+      spriteID: 3683a4f1e6e03a449b8855d78f16172c
+      internalID: -1172156412
       vertices: []
       indices: 
       edges: []
@@ -316,15 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Dash-Sheet_4: -122931407
-      Player_Dash-Sheet_2: -2064358673
-      Player_Dash-Sheet_5: -501663944
-      Player_Dash-Sheet_3: -314285250
-      Player_Dash-Sheet_6: 875017640
-      Player_Dash-Sheet_8: -1327229701
-      Player_Dash-Sheet_0: -1329886274
-      Player_Dash-Sheet_1: -1564044325
-      Player_Dash-Sheet_7: 1148669152
+      Player_Idle-Sheet 1_1: 412952066
+      Player_Idle-Sheet 1_0: 441468814
+      Player_Idle-Sheet 1_2: -1172156412
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

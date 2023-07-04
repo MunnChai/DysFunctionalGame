@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float defaultSpeed;
-    public float defaultDashSpeed;
-    public float dashDecel;
+    [SerializeField] private float defaultSpeed;
+    [SerializeField] private float defaultDashSpeed;
+    [SerializeField] private float dashDecel;
+    [SerializeField] private float dashCooldownTime;
+
+    public int health;
+    public bool invulnerable;
 
     private bool isDashing;
+    private bool dashOnCooldown;
     private float dashSpeed;
     private float hDashDirection;
     private float vDashDirection;
@@ -16,24 +21,24 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     // Start is called before the first frame update
-    void Start() {
-        defaultSpeed = 5;
-        defaultDashSpeed = 30;
-        dashDecel = 0.01f;
+    private void Start() {
         gameObject.tag = "Player";
         animator = gameObject.GetComponent<Animator>();
+        health = 5;
+        invulnerable = false;
     }
 
     // Update is called once per frame
-    void Update() {
+    private void Update() {
         // Movement
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         if (!isDashing) {
             Move(h, v, defaultSpeed);
-            if (Input.GetKeyDown(KeyCode.LeftShift) && (h != 0 || v != 0)) {
+            if (Input.GetKeyDown(KeyCode.LeftShift) && (h != 0 || v != 0) && !dashOnCooldown) {
                 isDashing = true;
+                invulnerable = true;
                 hDashDirection = h;
                 vDashDirection = v;
                 dashSpeed = defaultDashSpeed;
@@ -45,6 +50,8 @@ public class Player : MonoBehaviour
             dashSpeed -= dashDecel * dashSpeed;
             if (dashSpeed <= defaultSpeed) {
                 isDashing = false;
+                invulnerable = false;
+                StartCoroutine(DashCooldown());
             }
         }
         FixPos();
@@ -66,9 +73,7 @@ public class Player : MonoBehaviour
 
     // Dealing with collisions
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Enemy") {
-            // TODO 
-        }
+
     }
 
     // Fixes player position when they go out of bounds
@@ -113,6 +118,27 @@ public class Player : MonoBehaviour
         } else {
             animator.SetTrigger("DashSouthEast");
         }
-
     }
+
+    // Leaves dash on cooldown for a set amount of seconds
+    private IEnumerator DashCooldown() {
+        dashOnCooldown = true;
+        yield return new WaitForSeconds(dashCooldownTime);
+        dashOnCooldown = false;
+    }
+
+    // Sets the player to invulnerable for given seconds
+    private IEnumerator Invulnerability(float seconds) {
+        invulnerable = true;
+        yield return new WaitForSeconds(seconds);
+        invulnerable = false;
+    }
+
+    // Subtract damage from current health and play taking damage animation
+    public void TakeDamage(int damage) {
+        health -= damage;
+        // play damage animation
+        StartCoroutine(Invulnerability(1f));
+    }
+
 }

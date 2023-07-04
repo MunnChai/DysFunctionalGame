@@ -19,9 +19,11 @@ public class LaserEnemy : Enemy
         // pass
     }
 
-    protected override void OnTriggerEnter(Collider other) {
-        if (activated) {
-            Destroy(other.gameObject);
+    private void OnTriggerStay2D(Collider2D other) {
+        if (activated && other.tag == "Player") {
+            Player playerScript = other.GetComponent<Player>();
+            if (!playerScript.invulnerable)
+                playerScript.TakeDamage(2);
         }
     }
 
@@ -31,7 +33,7 @@ public class LaserEnemy : Enemy
         activated = true;
         var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(0, 0, 1, 1);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 

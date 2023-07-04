@@ -19,8 +19,13 @@ public class ShooterEnemy : Enemy
         base.Update();
     }
 
-    protected override void OnTriggerEnter(Collider other) {
-        // pass
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Player") {
+            Player playerScript = other.gameObject.GetComponent<Player>();
+            if (!playerScript.invulnerable)
+                playerScript.health -= 1;
+                // Play explosion animation
+        }
     }
 
     private void ShootBullet() {
