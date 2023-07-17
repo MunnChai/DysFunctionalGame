@@ -1,17 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LaserShooterEnemy : Enemy
 {
+    [SerializeField] private float fireRate = 1;
+
     public GameObject laserPrefab;
 
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
         speed = 1;
-        SetDirection(player.transform.position);
-        InvokeRepeating("ShootLaser", 1, 3);
+        try {
+            SetDirection(player.transform.position);
+        } catch (NullReferenceException e) {
+            
+        }  
+        InvokeRepeating("ShootLaser", fireRate, 3);
     }
 
     // Update is called once per frame
@@ -23,8 +30,9 @@ public class LaserShooterEnemy : Enemy
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player") {
             Player playerScript = other.gameObject.GetComponent<Player>();
+            PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerScript.health -= 1;
+                playerHealthScript.health -= 1;
                 // Play explosion animation
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,11 @@ public class BulletEnemy : Enemy
     protected new void Start() {
         base.Start();
         speed = 7.5f;
-        SetDirection(player.transform.position);
+        try {
+            SetDirection(player.transform.position);
+        } catch (NullReferenceException e) {
+            
+        }  
     }
 
     // Update is called once per frame
@@ -19,8 +24,9 @@ public class BulletEnemy : Enemy
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player") {
             Player playerScript = other.gameObject.GetComponent<Player>();
+            PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerScript.health -= 1;
+                playerHealthScript.health -= 1;
                 // Play explosion animation
         }
     }

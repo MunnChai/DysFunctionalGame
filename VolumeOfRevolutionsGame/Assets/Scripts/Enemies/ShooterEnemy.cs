@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,11 @@ public class ShooterEnemy : Enemy
     protected new void Start() {
         base.Start();
         speed = 2.5f;
-        SetDirection(player.transform.position);
+        try {
+            SetDirection(player.transform.position);
+        } catch (NullReferenceException e) {
+            
+        }  
         InvokeRepeating("ShootBullet", 1, 1);
     }
 
@@ -22,8 +27,9 @@ public class ShooterEnemy : Enemy
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player") {
             Player playerScript = other.gameObject.GetComponent<Player>();
+            PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerScript.health -= 1;
+                playerHealthScript.health -= 1;
                 // Play explosion animation
         }
     }

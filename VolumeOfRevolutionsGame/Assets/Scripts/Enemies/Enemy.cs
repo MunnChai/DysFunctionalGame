@@ -15,6 +15,9 @@ public abstract class Enemy : MonoBehaviour
     protected void Start() {
         gameObject.tag = "Enemy";
         player = GameObject.Find("Player");
+        if (player == null) {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame

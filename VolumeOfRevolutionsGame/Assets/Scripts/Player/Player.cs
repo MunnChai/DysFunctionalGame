@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashDecel;
     [SerializeField] private float dashCooldownTime;
 
-    public int health;
     public bool invulnerable;
 
     private bool isDashing;
@@ -19,12 +18,13 @@ public class Player : MonoBehaviour
     private float vDashDirection;
 
     private Animator animator;
+    private PlayerHealth playerHealthScript;
 
     // Start is called before the first frame update
     private void Start() {
         gameObject.tag = "Player";
         animator = gameObject.GetComponent<Animator>();
-        health = 5;
+        playerHealthScript = gameObject.GetComponent<PlayerHealth>();
         invulnerable = false;
     }
 
@@ -128,17 +128,9 @@ public class Player : MonoBehaviour
     }
 
     // Sets the player to invulnerable for given seconds
-    private IEnumerator Invulnerability(float seconds) {
+    public IEnumerator Invulnerability(float seconds) {
         invulnerable = true;
         yield return new WaitForSeconds(seconds);
         invulnerable = false;
     }
-
-    // Subtract damage from current health and play taking damage animation
-    public void TakeDamage(int damage) {
-        health -= damage;
-        // play damage animation
-        StartCoroutine(Invulnerability(1f));
-    }
-
 }

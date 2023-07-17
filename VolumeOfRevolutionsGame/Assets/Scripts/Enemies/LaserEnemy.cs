@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,13 @@ public class LaserEnemy : Enemy
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
-        StartCoroutine(ChargeLaser());
-        SetDirection(player.transform.position);
-        RotateToPlayer();
+        try {
+            StartCoroutine(ChargeLaser());
+            SetDirection(player.transform.position);
+            RotateToPlayer();
+        } catch (NullReferenceException e) {
+            
+        }  
     }
 
     // Update is called once per frame
@@ -21,9 +26,10 @@ public class LaserEnemy : Enemy
 
     private void OnTriggerStay2D(Collider2D other) {
         if (activated && other.tag == "Player") {
-            Player playerScript = other.GetComponent<Player>();
+            Player playerScript = other.gameObject.GetComponent<Player>();
+            PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerScript.TakeDamage(2);
+                playerHealthScript.TakeDamage(2);
         }
     }
 
