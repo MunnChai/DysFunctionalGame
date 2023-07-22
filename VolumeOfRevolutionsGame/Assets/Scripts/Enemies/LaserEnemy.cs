@@ -5,23 +5,23 @@ using UnityEngine;
 
 public class LaserEnemy : Enemy
 {
+    private static float chargeDuration = 1f;
+    private static float fireDuration = 1f;
+    private Animator animator;
+
     private bool activated;
 
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
+        animator = gameObject.GetComponent<Animator>();
         try {
-            StartCoroutine(ChargeLaser());
             SetDirection(player.transform.position);
             RotateToPlayer();
+            StartCoroutine(ChargeLaser());
         } catch (NullReferenceException e) {
             
-        }  
-    }
-
-    // Update is called once per frame
-    protected new void Update() {
-        // pass
+        } 
     }
 
     private void OnTriggerStay2D(Collider2D other) {
@@ -35,11 +35,10 @@ public class LaserEnemy : Enemy
 
     // Waits for some seconds, then activates for some seconds before being deleted
     private IEnumerator ChargeLaser() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(chargeDuration);
         activated = true;
-        var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(0, 0, 1, 1);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(fireDuration);
+        activated = false;
         Destroy(gameObject);
     }
 

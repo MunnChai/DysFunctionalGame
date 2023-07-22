@@ -9,7 +9,7 @@ public abstract class Enemy : MonoBehaviour
     protected float xMultiplier;
     protected float yMultiplier;
     protected float angle;
-    protected float speed;
+    [SerializeField] protected float speed;
 
     // Start is called before the first frame update
     protected void Start() {
@@ -55,7 +55,7 @@ public abstract class Enemy : MonoBehaviour
         float x = transform.position.x;
         float y = transform.position.y;
 
-        float distOffscreen = 1; // How far offscreen the enemy will go before being deleted
+        float distOffscreen = 3; // How far offscreen the enemy will go before being deleted
 
         if (x > Constants.rightBound + distOffscreen || x < Constants.leftBound - distOffscreen ||
             y > Constants.topBound + distOffscreen || y < Constants.bottomBound - distOffscreen) {

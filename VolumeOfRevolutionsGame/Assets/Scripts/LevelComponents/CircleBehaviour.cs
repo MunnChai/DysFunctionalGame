@@ -16,10 +16,10 @@ public class CircleBehaviour : MonoBehaviour
     {
         
         if (transform.localScale.x >= 11) {
-            amount = -0.01f;
+            amount = -1f;
         } else if (transform.localScale.x <= -11) {
-            amount = 0.01f;
+            amount = 1f;
         } 
-        transform.localScale += new Vector3(amount, amount, amount);
+        transform.localScale += new Vector3(amount * Time.deltaTime, amount * Time.deltaTime, amount * Time.deltaTime);
     }
 }

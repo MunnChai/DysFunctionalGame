@@ -29,7 +29,7 @@ public class ShooterEnemy : Enemy
             Player playerScript = other.gameObject.GetComponent<Player>();
             PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerHealthScript.health -= 1;
+                playerHealthScript.TakeDamage(1);
                 // Play explosion animation
         }
     }

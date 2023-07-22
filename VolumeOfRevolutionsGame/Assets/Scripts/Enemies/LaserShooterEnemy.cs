@@ -6,13 +6,14 @@ using UnityEngine;
 public class LaserShooterEnemy : Enemy
 {
     [SerializeField] private float fireRate = 1;
+    [SerializeField] private float defaultSpeed = 100;
 
     public GameObject laserPrefab;
 
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
-        speed = 1;
+        speed = defaultSpeed;
         try {
             SetDirection(player.transform.position);
         } catch (NullReferenceException e) {
@@ -32,7 +33,7 @@ public class LaserShooterEnemy : Enemy
             Player playerScript = other.gameObject.GetComponent<Player>();
             PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerHealthScript.health -= 1;
+                playerHealthScript.TakeDamage(1);
                 // Play explosion animation
         }
     }

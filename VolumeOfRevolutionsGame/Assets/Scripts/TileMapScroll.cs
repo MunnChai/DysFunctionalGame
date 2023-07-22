@@ -16,7 +16,7 @@ public class TileMapScroll : MonoBehaviour
     {
         transform.position -= new Vector3(-scrollSpeed * 1.6f * Time.deltaTime, scrollSpeed * Time.deltaTime, 0);
 
-        if (transform.position.y <= -10) {
+        if (transform.position.y <= -160) {
             transform.position = new Vector3(0, 0, 0);
         }
     }

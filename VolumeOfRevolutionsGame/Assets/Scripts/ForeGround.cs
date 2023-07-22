@@ -3,39 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackGround : MonoBehaviour
+public class ForeGround : MonoBehaviour
 {
-    private Image image;
-    private Color color;
-
+    [SerializeField] private GameObject foreground;
+    [SerializeField] private Image image;
     // Start is called before the first frame update
     void Start()
     {
         image = gameObject.GetComponent<Image>();
-        color = image.color;
+        foreground.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    // Sets transparency to given percentage
-    public void SetTransparency(float percentage) {
-        float r = color.r;
-        float g = color.g;
-        float b = color.b;
-        float transparency = (percentage / 100);
-
-        image.color = new Color(r, g, b, transparency);
-        Debug.Log("Setting transparency to " + transparency);
+    public void FadeInAndOut() {
+        foreground.SetActive(true);
+        StartCoroutine(FadeTransparencyInAndOut());
     }
 
-    public IEnumerator FadeTransparency(float percentage, float duration) {
-        float r = color.r;
-        float g = color.g;
-        float b = color.b;
+    private IEnumerator FadeTransparencyInAndOut() {
+        StartCoroutine(FadeTransparency(100, 0.1f));
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(FadeTransparency(0, 0.1f));
+        yield return new WaitForSeconds(0.1f);
+        foreground.SetActive(false);
+    }
+
+    private IEnumerator FadeTransparency(float percentage, float duration) {
+        float r = image.color.r;
+        float g = image.color.g;
+        float b = image.color.b;
         float transparency = (percentage / 100);
 
         Color startColor = image.color;

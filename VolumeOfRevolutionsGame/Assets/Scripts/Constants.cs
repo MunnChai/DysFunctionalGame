@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Constants : MonoBehaviour
 {
-    public static float topBound = 7.4375f;
-    public static float bottomBound = -7.4375f;
-    public static float leftBound = -13.22222f;
-    public static float rightBound = 13.22222f;
+    public static float topBound = 90f;
+    public static float bottomBound = -90f;
+    public static float leftBound = -160f;
+    public static float rightBound = 160f;
 
     // Start is called before the first frame update
     void Start()

@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class BulletEnemy : Enemy
 {
+    [SerializeField] private ParticleSystem particleSystem;
+
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
-        speed = 7.5f;
         try {
             SetDirection(player.transform.position);
         } catch (NullReferenceException e) {
             
-        }  
+        }
+        var newShape = particleSystem.shape;
+        var newAngle = angle * 180 / Mathf.PI;
+        newShape.rotation = new Vector3(0, newAngle, 0);
     }
 
     // Update is called once per frame
@@ -26,7 +30,7 @@ public class BulletEnemy : Enemy
             Player playerScript = other.gameObject.GetComponent<Player>();
             PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             if (!playerScript.invulnerable)
-                playerHealthScript.health -= 1;
+                playerHealthScript.TakeDamage(1);
                 // Play explosion animation
         }
     }

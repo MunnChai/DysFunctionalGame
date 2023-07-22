@@ -22,4 +22,14 @@ public class MainMenu : Menu
         Debug.Log("Quitting");
         Application.Quit();
     }
+
+    public new void ShowMenu() {
+        
+    }
+
+    public new void HideMenu() {
+
+    }
+
+    
 }

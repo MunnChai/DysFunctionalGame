@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem particleSystem;
+
     [SerializeField] private float defaultSpeed;
     [SerializeField] private float defaultDashSpeed;
-    [SerializeField] private float dashDecel;
+    [SerializeField] private float dashDuration;
     [SerializeField] private float dashCooldownTime;
 
     public bool invulnerable;
-
-    private bool isDashing;
+    private bool dashing;
     private bool dashOnCooldown;
-    private float dashSpeed;
-    private float hDashDirection;
-    private float vDashDirection;
 
+    private PlayerParticles playerParticles;
     private Animator animator;
     private PlayerHealth playerHealthScript;
 
     // Start is called before the first frame update
     private void Start() {
         gameObject.tag = "Player";
+        playerParticles = particleSystem.GetComponent<PlayerParticles>();
         animator = gameObject.GetComponent<Animator>();
         playerHealthScript = gameObject.GetComponent<PlayerHealth>();
         invulnerable = false;
@@ -34,27 +34,15 @@ public class Player : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (!isDashing) {
+        if (!dashing) {
             Move(h, v, defaultSpeed);
             if (Input.GetKeyDown(KeyCode.LeftShift) && (h != 0 || v != 0) && !dashOnCooldown) {
-                isDashing = true;
-                invulnerable = true;
-                hDashDirection = h;
-                vDashDirection = v;
-                dashSpeed = defaultDashSpeed;
+                StartCoroutine(Dash(h, v));
                 HandleDashAnimation(h, v);
+                StartCoroutine(playerParticles.DashParticles(dashDuration));
             }
         }
-        if (isDashing) {
-            Move(hDashDirection, vDashDirection, dashSpeed);
-            dashSpeed -= dashDecel * dashSpeed;
-            if (dashSpeed <= defaultSpeed) {
-                isDashing = false;
-                invulnerable = false;
-                StartCoroutine(DashCooldown());
-            }
-        }
-        FixPos();
+        CheckOutOfBounds();
     }
 
     // Move the player in a given direction and speed
@@ -71,13 +59,32 @@ public class Player : MonoBehaviour
         transform.position += new Vector3(x, y, 0);
     }
 
+    private IEnumerator Dash(float h, float v) {
+        float dashSpeed = defaultDashSpeed;
+        float dashDeceleration = (defaultDashSpeed - defaultSpeed) / dashDuration;
+        
+        StartCoroutine(Invulnerability(dashDuration));
+        dashing = true;
+
+        for (float t = 0; t < dashDuration; t += Time.deltaTime) {
+            Move(h, v, dashSpeed);
+            dashSpeed -= dashDeceleration * Time.deltaTime;
+            if (dashSpeed < defaultSpeed) {
+                dashSpeed = defaultSpeed;
+            }
+            yield return null;
+        }
+        dashing = false;
+        StartCoroutine(DashCooldown());
+    }
+
     // Dealing with collisions
     private void OnTriggerEnter2D(Collider2D other) {
 
     }
 
     // Fixes player position when they go out of bounds
-    private void FixPos() {
+    private void CheckOutOfBounds() {
         Vector3 pos = transform.position;
         float x;
         float y;

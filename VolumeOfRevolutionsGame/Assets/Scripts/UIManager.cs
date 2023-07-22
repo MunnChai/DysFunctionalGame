@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     private PauseMenu pauseMenu;
     private BackGround background;
 
+    private bool gameOver = false;
+    private bool paused = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,17 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("escape")) {
+            if (!paused && !gameOver) {
+                paused = true;
+                Time.timeScale = 0f;
+                ShowPauseMenu();
+            } else {
+                paused = false;
+                Time.timeScale = 1f;
+                HidePauseMenu();
+            }
+        }
     }
 
     // Shows given menu
@@ -38,6 +51,7 @@ public class UIManager : MonoBehaviour
 
     // Shows given menu, fades in UI background
     public void ShowDefeatMenu() {
+        gameOver = true;
         defeatMenu.ShowMenu();
         StartCoroutine(background.FadeTransparency(90, 2));
     }
