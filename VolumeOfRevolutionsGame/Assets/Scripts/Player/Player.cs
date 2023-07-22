@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private PlayerParticles playerParticles;
     private Animator animator;
     private PlayerHealth playerHealthScript;
+    private PlayerSFX playerSFX;
 
     // Start is called before the first frame update
     private void Start() {
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
         playerParticles = particleSystem.GetComponent<PlayerParticles>();
         animator = gameObject.GetComponent<Animator>();
         playerHealthScript = gameObject.GetComponent<PlayerHealth>();
+        playerSFX = gameObject.GetComponent<PlayerSFX>();
         invulnerable = false;
     }
 
@@ -40,6 +42,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(Dash(h, v));
                 HandleDashAnimation(h, v);
                 StartCoroutine(playerParticles.DashParticles(dashDuration));
+                playerSFX.DashSound();
             }
         }
         CheckOutOfBounds();

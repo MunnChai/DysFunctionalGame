@@ -43,7 +43,7 @@ public class LevelSelectMenu : Menu
 
     // Loads the level scene with given parameters as settings for the level
     public void PlayLevel() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // Sets current level to next level in arraylist of levels

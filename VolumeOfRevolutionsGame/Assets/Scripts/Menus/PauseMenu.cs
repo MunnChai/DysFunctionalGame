@@ -19,6 +19,6 @@ public class PauseMenu : Menu
 
     // Loads Menu scene
     public void ReturnToMenu() {
-        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % 2);
+        SceneManager.LoadSceneAsync((SceneManager.GetActiveScene().buildIndex + 1) % 2);
     }
 }
