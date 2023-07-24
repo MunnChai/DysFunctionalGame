@@ -124,8 +124,8 @@ TextureImporter:
         y: 144
         width: 320
         height: 48
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -433,8 +433,8 @@ TextureImporter:
       X_Laser-Sheet_8: -948327252
       X_Laser-Sheet_10: 1543245703
       X_Laser-Sheet_11: -549766961
-      X_Laser-Sheet_13: -414735610
       X_Laser-Sheet_2: 862664514
+      X_Laser-Sheet_13: -414735610
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
