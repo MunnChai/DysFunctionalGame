@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LaserShooterEnemy : Enemy
 {
+    
+
     [SerializeField] private float fireRate = 1;
     [SerializeField] private float defaultSpeed = 100;
 
@@ -41,7 +43,9 @@ public class LaserShooterEnemy : Enemy
 
     // Spawns a LaserEnemy on current position
     private void ShootLaser() {
-        Instantiate(laserPrefab, transform.position, Quaternion.identity);
+        var laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+        laser.transform.parent = enemySpawnManager.transform;
+        enemySpawnManager.GetComponent<EnemySpawnManager>().enemies.Add(laser);
     }
 
     

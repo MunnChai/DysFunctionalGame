@@ -5,17 +5,29 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject xEnemy, xSquaredEnemy, xCubedEnemy;
-
     [SerializeField] private float spawnInterval;
+
+    [SerializeField] private GameObject playerObject;
+
+    public ArrayList enemies = new ArrayList();
+
+    private PlayerHealth playerHealthScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnEnemy", 1f, spawnInterval);
+        playerHealthScript = playerObject.GetComponent<PlayerHealth>();
+        StartCoroutine(SpawnEnemy());
     }
 
-    private void SpawnEnemy() {
+    public void DestoryAllEnemies() {
+        foreach (GameObject enemy in enemies) {
+            Destroy(enemy);
+        }
+    }
 
+    private IEnumerator SpawnEnemy() {
+        yield return new WaitForSeconds(spawnInterval);
         float yPos;
         float randomNum = Random.Range((int) 0, (int) 2);
         if (randomNum == 0) {
@@ -26,5 +38,14 @@ public class EnemySpawnManager : MonoBehaviour
 
         GameObject newEnemy = Instantiate(xEnemy, new Vector3(Random.Range(Constants.leftBound, Constants.rightBound), 
                                                               yPos, 0), Quaternion.identity);
+
+        enemies.Add(newEnemy);
+        newEnemy.transform.parent = gameObject.transform;
+        
+        if (!playerHealthScript.gameOver) {
+            StartCoroutine(SpawnEnemy());
+        } else {
+            DestoryAllEnemies();
+        }
     }
 }

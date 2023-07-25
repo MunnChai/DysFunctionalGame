@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject levelSelectMenu;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private GameObject foregroundObject;
+
+    private ForeGround foreground;
+
+    void Start() {
+        foreground = foregroundObject.GetComponent<ForeGround>();
+        StartCoroutine(foreground.FadeOut(0.5f));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void PlayLevel() {
+        foreground.FadeIn(0.5f);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void ShowMainMenu() {

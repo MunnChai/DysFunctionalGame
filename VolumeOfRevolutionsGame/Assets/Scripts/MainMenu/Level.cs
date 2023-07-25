@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class Level
 {
     private Image graphPreview;
-    private string name;
+    private string function;
     
-    public Level(string name) {
-        this.name = name;
+    public Level(string function) {
+        this.function = function;
     }
 
-    public string GetName() {
-        return name;
+    public string GetFunction() {
+        return function;
     }
 }

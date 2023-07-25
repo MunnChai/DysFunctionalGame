@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject defeatMenuObject;
     [SerializeField] GameObject pauseMenuObject;
+    [SerializeField] GameObject victoryMenuObject;
     [SerializeField] GameObject backgroundObject;
+    [SerializeField] GameObject foregroundObject;
 
     private PauseMenu defeatMenu;
     private PauseMenu pauseMenu;
+    private PauseMenu victoryMenu;
     private BackGround background;
+    private ForeGround foreground;
 
     private bool gameOver = false;
     private bool paused = false;
@@ -20,7 +25,11 @@ public class UIManager : MonoBehaviour
     {
         defeatMenu = defeatMenuObject.GetComponent<PauseMenu>();
         pauseMenu = pauseMenuObject.GetComponent<PauseMenu>();
+        victoryMenu = victoryMenuObject.GetComponent<PauseMenu>();
         background = backgroundObject.GetComponent<BackGround>();
+        foreground = foregroundObject.GetComponent<ForeGround>();
+
+        StartCoroutine(foreground.FadeOut(0.5f));
     }
 
     // Update is called once per frame
@@ -28,36 +37,58 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown("escape")) {
             if (!paused && !gameOver) {
-                paused = true;
-                Time.timeScale = 0f;
-                ShowPauseMenu();
-            } else {
-                paused = false;
-                Time.timeScale = 1f;
-                HidePauseMenu();
+                Pause();
+            } else if (!gameOver) {
+                Unpause();
             }
         }
     }
 
-    // Shows given menu
+    public void RestartLevel() {
+        foreground.FadeIn(0.5f);
+        SceneManager.LoadSceneAsync(1);
+        Time.timeScale = 1f;
+    }
+
+    public void Pause() {
+        paused = true;
+        Time.timeScale = 0f;
+        background.SetTransparency(90);
+        ShowPauseMenu();
+    }
+
+    public void Unpause() {
+        paused = false;
+        Time.timeScale = 1f;
+        background.SetTransparency(0);
+        HidePauseMenu();
+    }
+
     public void ShowPauseMenu() {
         pauseMenu.ShowMenu();
     }
 
-    // Hides given menu, sets 
     public void HidePauseMenu() {
         pauseMenu.HideMenu();
     }
 
-    // Shows given menu, fades in UI background
     public void ShowDefeatMenu() {
         gameOver = true;
         defeatMenu.ShowMenu();
         StartCoroutine(background.FadeTransparency(90, 2));
     }
 
-    // Hides given menu
     public void HideDefeatMenu() {
         defeatMenu.HideMenu();
+    }
+
+    public void ShowVictoryMenu() {
+        gameOver = true;
+        victoryMenu.ShowMenu();
+        StartCoroutine(background.FadeTransparency(100, 2));
+    }
+
+    public void HideVictoryMenu() {
+        victoryMenu.HideMenu();
     }
 }

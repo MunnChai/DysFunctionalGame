@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1727db5f4f489848a541c9857af5ff1, type: 3}
   m_Name: Grudge
   m_EditorClassIdentifier: 
-  reverbTail: 0
+  reverbTail: 3.75
   intensityClips:
   - {fileID: 8300000, guid: 4ae9913ddaf49d240937086c6ff9ac90, type: 3}
   - {fileID: 8300000, guid: 22f0edacb4f85064cae6f9aae65ffd22, type: 3}

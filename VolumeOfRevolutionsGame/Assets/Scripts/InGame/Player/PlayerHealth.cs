@@ -42,11 +42,11 @@ public class PlayerHealth : MonoBehaviour
 
     // Subtract damage from current health and play taking damage animation
     public void TakeDamage(int damage) {
-        if (!playerScript.dashing && !playerScript.invulnerable) {
+        if (!playerScript.dashing && !playerScript.invulnerable && !gameOver) {
             health -= damage;
             playerSFX.HitSound();
             if (health <= 0) {
-                GameOver();
+                StartCoroutine(GameOver());
                 playerSFX.DeathSound();
             } else {
                 StartCoroutine(playerParticles.HitParticles());
@@ -57,9 +57,21 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
+    public void Heal(int healAmount) {
+        health += healAmount;
+        if (health > 5) {
+            health = 5;
+        }
+        UpdateHealthBar();
+    }
+
     // Plays player death animation, destroys player gameObject and shows defeat UI menu
-    public void GameOver() {
+    private IEnumerator GameOver() {
         gameOver = true;
+        StartCoroutine(playerScript.Invulnerability(5f));
+        animator.SetTrigger("Death");
+        StartCoroutine(playerParticles.DeathParticles());
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
         UIManager.ShowDefeatMenu();
     }
@@ -70,6 +82,7 @@ public class PlayerHealth : MonoBehaviour
                 hearts[i].GetComponent<Animator>().enabled = false;
                 hearts[i].sprite = emptyHeart;
             } else {
+                hearts[i].GetComponent<Animator>().enabled = true;
                 hearts[i].sprite = fullHeart;
             }
         }

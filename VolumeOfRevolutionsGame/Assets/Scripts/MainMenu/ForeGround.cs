@@ -11,7 +11,6 @@ public class ForeGround : MonoBehaviour
     void Start()
     {
         image = gameObject.GetComponent<Image>();
-        foreground.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,6 +22,18 @@ public class ForeGround : MonoBehaviour
     public void FadeInAndOut() {
         foreground.SetActive(true);
         StartCoroutine(FadeTransparencyInAndOut());
+    }
+
+    public void FadeIn(float duration) {
+        foreground.SetActive(true);
+        StartCoroutine(FadeTransparency(100, duration));
+    }
+
+    public IEnumerator FadeOut(float duration) {
+        foreground.SetActive(true);
+        StartCoroutine(FadeTransparency(0, duration));
+        yield return new WaitForSeconds(duration);
+        foreground.SetActive(false);
     }
 
     private IEnumerator FadeTransparencyInAndOut() {
@@ -47,6 +58,6 @@ public class ForeGround : MonoBehaviour
             image.color = Color.Lerp(startColor, newColor, normalizedTime);
             yield return null;
         }
-        image.color = newColor; //without this, the value will end at something like 0.9992367
+        image.color = newColor; // Without this, the value will end at something like 0.9992367
     }
 }

@@ -9,6 +9,8 @@ public class LaserEnemy : Enemy
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip laserCharge, laserShoot;
 
+    private GameObject particleManager;
+
     private static float chargeDuration = 1f;
     private static float fireDuration = 0.8f;
     private Animator animator;
@@ -18,6 +20,7 @@ public class LaserEnemy : Enemy
     // Start is called before the first frame update
     protected new void Start() {
         base.Start();
+        particleManager = GameObject.Find("ParticleManager");
         animator = gameObject.GetComponent<Animator>();
         audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
         try {
@@ -27,8 +30,9 @@ public class LaserEnemy : Enemy
         } catch (NullReferenceException e) {
             
         } 
-        var laser = Instantiate(particleSystem, transform.position, Quaternion.identity);
-        laser.GetComponent<LaserParticles>().RotateToPlayer(angle * 180 / Mathf.PI);
+        var laserParticles = Instantiate(particleSystem, transform.position, Quaternion.identity);
+        laserParticles.GetComponent<LaserParticles>().RotateToPlayer(angle * 180 / Mathf.PI);
+        laserParticles.transform.parent = particleManager.transform;
     }
 
     private void OnTriggerStay2D(Collider2D other) {

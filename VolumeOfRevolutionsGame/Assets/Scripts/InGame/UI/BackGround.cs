@@ -29,7 +29,6 @@ public class BackGround : MonoBehaviour
         float transparency = (percentage / 100);
 
         image.color = new Color(r, g, b, transparency);
-        Debug.Log("Setting transparency to " + transparency);
     }
 
     public IEnumerator FadeTransparency(float percentage, float duration) {
@@ -46,6 +45,6 @@ public class BackGround : MonoBehaviour
             image.color = Color.Lerp(startColor, newColor, normalizedTime);
             yield return null;
         }
-        image.color = newColor; //without this, the value will end at something like 0.9992367
+        image.color = newColor; 
     }
 }

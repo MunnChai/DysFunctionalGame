@@ -17,7 +17,7 @@ public class Clickable : MonoBehaviour
     private IEnumerator ClickAnimation(float duration) {
         var initialScale = transform.localScale;
         float scaleSpeed = 0.005f;
-        for (float t = 0; t < duration; t+= Time.deltaTime) {
+        for (float t = 0; t < duration; t += Time.unscaledDeltaTime) {
             if (t < duration / 2) {
                 transform.localScale -= new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
             } else {

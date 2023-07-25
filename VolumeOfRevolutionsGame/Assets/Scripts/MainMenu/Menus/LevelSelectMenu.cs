@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class LevelSelectMenu : Menu
@@ -34,16 +33,11 @@ public class LevelSelectMenu : Menu
         levels.Add(new Level("Sin(x)"));
         levels.Add(new Level("Cos(x)"));
         levels.Add(new Level("Tan(x)"));
-        levels.Add(new Level("Sin(x)+1"));
+        levels.Add(new Level("Sin(x)+Cos(2x+2)"));
         numLevels = 4;
 
         SetLevel((Level) levels[0]);
         currentIndex = 0;
-    }
-
-    // Loads the level scene with given parameters as settings for the level
-    public void PlayLevel() {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // Sets current level to next level in arraylist of levels
@@ -69,9 +63,11 @@ public class LevelSelectMenu : Menu
 
     // Sets active level to given level
     private void SetLevel(Level level) {
+        MathFunction.level = level;
+
         (activeTitle, inactiveTitle) = (inactiveTitle, activeTitle);
         currentLevel = level;
-        activeTitle.text = level.GetName().ToUpper();
+        activeTitle.text = level.GetFunction().ToUpper();
         StartCoroutine(FadeTextTransparency(activeTitle, 100, selectCooldown));
         StartCoroutine(FadeTextTransparency(inactiveTitle, 0, selectCooldown));
         StartCoroutine(StartCooldown(selectCooldown));

@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : Menu
 {
+    [SerializeField] private GameObject foregroundObject;
+
+    private ForeGround foreground;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreground = foregroundObject.GetComponent<ForeGround>();
     }
 
     // Update is called once per frame
@@ -19,6 +23,8 @@ public class PauseMenu : Menu
 
     // Loads Menu scene
     public void ReturnToMenu() {
-        SceneManager.LoadSceneAsync((SceneManager.GetActiveScene().buildIndex + 1) % 2);
+        foreground.FadeIn(0.5f);
+        SceneManager.LoadSceneAsync(0);
+        Time.timeScale = 1f;
     }
 }

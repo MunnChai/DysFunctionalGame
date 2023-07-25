@@ -5,16 +5,19 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     protected GameObject player;
+    protected GameObject enemySpawnManager;
     protected Enemy enemy;
     protected float xMultiplier;
     protected float yMultiplier;
     protected float angle;
     [SerializeField] protected float speed;
+    
 
     // Start is called before the first frame update
     protected void Start() {
         gameObject.tag = "Enemy";
         player = GameObject.Find("Player");
+        enemySpawnManager = GameObject.Find("EnemySpawnManager");
         if (player == null) {
             Destroy(gameObject);
         }

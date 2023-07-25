@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (!dashing) {
+        if (!dashing && !playerHealthScript.gameOver) {
             Move(h, v, defaultSpeed);
             if (Input.GetKeyDown(KeyCode.LeftShift) && (h != 0 || v != 0) && !dashOnCooldown) {
                 StartCoroutine(Dash(h, v));
