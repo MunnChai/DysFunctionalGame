@@ -10,12 +10,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject victoryMenuObject;
     [SerializeField] GameObject backgroundObject;
     [SerializeField] GameObject foregroundObject;
+    [SerializeField] GameObject audioSourceObject;
+    [SerializeField] AudioClip uiInteractSFX;
 
     private PauseMenu defeatMenu;
     private PauseMenu pauseMenu;
     private PauseMenu victoryMenu;
     private BackGround background;
     private ForeGround foreground;
+    private AudioSource audioSource;
 
     private bool gameOver = false;
     private bool paused = false;
@@ -28,6 +31,7 @@ public class UIManager : MonoBehaviour
         victoryMenu = victoryMenuObject.GetComponent<PauseMenu>();
         background = backgroundObject.GetComponent<BackGround>();
         foreground = foregroundObject.GetComponent<ForeGround>();
+        audioSource = audioSourceObject.GetComponent<AudioSource>();
 
         StartCoroutine(foreground.FadeOut(0.5f));
     }
@@ -51,6 +55,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void Pause() {
+        PlayInteractSFX();
         paused = true;
         Time.timeScale = 0f;
         background.SetTransparency(90);
@@ -58,6 +63,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void Unpause() {
+        PlayInteractSFX();
         paused = false;
         Time.timeScale = 1f;
         background.SetTransparency(0);
@@ -91,4 +97,8 @@ public class UIManager : MonoBehaviour
     public void HideVictoryMenu() {
         victoryMenu.HideMenu();
     }
+
+    public void PlayInteractSFX() {
+        audioSource.PlayOneShot(uiInteractSFX, 0.5f);
+    }  
 }

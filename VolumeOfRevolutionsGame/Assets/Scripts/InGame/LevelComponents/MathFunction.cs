@@ -11,7 +11,6 @@ public class MathFunction : MonoBehaviour
     [SerializeField] private float acceleration;
 
     public float speed;
-    public static Level level = new Level("Sin(x)");
 
     private float currentX;
     private ArrayList cubes = new ArrayList();
@@ -27,6 +26,8 @@ public class MathFunction : MonoBehaviour
     public void DrawCubes() {
         float yPos = PickFunction(currentX) * (Constants.topBound - Constants.bottomBound) / 2 + 20;
         var cubeObject = Instantiate(cube, new Vector3(Constants.rightBound + cube.transform.localScale.x / 2, yPos, 0), Quaternion.identity);
+        var image = cubeObject.GetComponent<SpriteRenderer>();
+        image.color = LevelSelectMenu.currentLevel.GetColor();
         cubeObject.transform.parent = gameObject.transform;
         cubes.Add(cubeObject);
         currentX += speed / (curveWidth * Mathf.PI);
@@ -41,7 +42,7 @@ public class MathFunction : MonoBehaviour
 
     private float PickFunction(float x) {
         float num;
-        switch (level.GetFunction()) {
+        switch (LevelSelectMenu.currentLevel.GetName()) {
             case "Sin(x)":
                 num = Mathf.Sin(x);
                 break;

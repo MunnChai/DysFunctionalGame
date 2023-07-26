@@ -49,6 +49,7 @@ public class PlayerHealth : MonoBehaviour
                 StartCoroutine(GameOver());
                 playerSFX.DeathSound();
             } else {
+                ScoreManager.AddHit(1);
                 StartCoroutine(playerParticles.HitParticles());
                 animator.SetTrigger("Hurt");
                 StartCoroutine(playerScript.Invulnerability(1.5f));

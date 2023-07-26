@@ -7,15 +7,25 @@ public class LevelSelectMenu : Menu
 {
     [SerializeField] private GameObject levelTitleObject1;
     [SerializeField] private GameObject levelTitleObject2;
+    [SerializeField] private GameObject menuBackgroundObject;
+    [SerializeField] private Color[] levelColors;
+
+    [SerializeField] private GameObject gradeObject;
+    [SerializeField] private GameObject scoreObject;
+    [SerializeField] private GameObject hitsObject;
     private TMP_Text levelTitle1;
     private TMP_Text levelTitle2;
     private TMP_Text activeTitle;
     private TMP_Text inactiveTitle;
+    private TMP_Text grade;
+    private TMP_Text score;
+    private TMP_Text hits;
+    private MenuBackGround menuBackground;
     private bool onCooldown = false;
     private float selectCooldown = 0.2f;
 
     private ArrayList levels = new ArrayList();
-    private Level currentLevel;
+    public static Level currentLevel;
     private int currentIndex;
 
     private int numLevels;
@@ -25,15 +35,19 @@ public class LevelSelectMenu : Menu
     {
         levelTitle1 = levelTitleObject1.GetComponent<TMP_Text>();
         levelTitle2 = levelTitleObject2.GetComponent<TMP_Text>();
+        menuBackground = menuBackgroundObject.GetComponent<MenuBackGround>();
+        grade = gradeObject.GetComponent<TMP_Text>();
+        score = scoreObject.GetComponent<TMP_Text>();
+        hits = hitsObject.GetComponent<TMP_Text>();
         activeTitle = levelTitle1;
         inactiveTitle = levelTitle2;
         var tempColor = inactiveTitle.color;
         inactiveTitle.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0);
 
-        levels.Add(new Level("Sin(x)"));
-        levels.Add(new Level("Cos(x)"));
-        levels.Add(new Level("Tan(x)"));
-        levels.Add(new Level("Sin(x)+Cos(2x+2)"));
+        levels.Add(new Level("Sin(x)", (Color) levelColors[0]));
+        levels.Add(new Level("Cos(x)", (Color) levelColors[1]));
+        levels.Add(new Level("Tan(x)", (Color) levelColors[2]));
+        levels.Add(new Level("Sin(x)+Cos(2x+2)", (Color) levelColors[3]));
         numLevels = 4;
 
         SetLevel((Level) levels[0]);
@@ -63,14 +77,20 @@ public class LevelSelectMenu : Menu
 
     // Sets active level to given level
     private void SetLevel(Level level) {
-        MathFunction.level = level;
-
         (activeTitle, inactiveTitle) = (inactiveTitle, activeTitle);
         currentLevel = level;
-        activeTitle.text = level.GetFunction().ToUpper();
+        activeTitle.text = level.GetName().ToUpper();
+        StartCoroutine(menuBackground.FadeToColor(level.GetColor(), selectCooldown));
         StartCoroutine(FadeTextTransparency(activeTitle, 100, selectCooldown));
         StartCoroutine(FadeTextTransparency(inactiveTitle, 0, selectCooldown));
         StartCoroutine(StartCooldown(selectCooldown));
+        foreach(LevelHighscore levelHighscore in SaveData.highScores) {
+            if (levelHighscore.levelName == currentLevel.GetName()) {
+                grade.text = levelHighscore.grade;
+                score.text = levelHighscore.score.ToString();
+                hits.text = levelHighscore.hits.ToString();
+            }
+        }
     }
 
     private IEnumerator StartCooldown(float seconds) {

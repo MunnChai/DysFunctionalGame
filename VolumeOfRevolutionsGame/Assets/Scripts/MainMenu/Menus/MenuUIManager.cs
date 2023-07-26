@@ -10,10 +10,14 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField] private GameObject foregroundObject;
 
     private ForeGround foreground;
+    private SaveData saveData;
 
     void Start() {
+        Time.timeScale = 1;
         foreground = foregroundObject.GetComponent<ForeGround>();
         StartCoroutine(foreground.FadeOut(0.5f));
+        saveData = gameObject.GetComponent<SaveData>();
+        saveData.LoadFromJson();
     }
 
     public void PlayLevel() {
@@ -34,4 +38,6 @@ public class MenuUIManager : MonoBehaviour
         shownMenu.SetActive(true);
         hiddenMenu.SetActive(false);
     }
+
+
 }

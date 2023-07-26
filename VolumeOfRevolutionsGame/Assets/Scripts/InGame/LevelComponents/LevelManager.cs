@@ -8,7 +8,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject uiManagerObject;
     [SerializeField] private GameObject progressBarObject;
     [SerializeField] private GameObject playerObject;
-    [SerializeField] private float levelDuration;
+    [SerializeField] public float levelDuration;
+
+    public float progress;
     
     private Manager musicManager;
     private int musicIntensity;
@@ -18,7 +20,6 @@ public class LevelManager : MonoBehaviour
     private Player player;
     private PlayerHealth playerHealth;
     private float levelSpeed;
-
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +39,8 @@ public class LevelManager : MonoBehaviour
     private IEnumerator AddProgress(float amount) {
         yield return null;
         if (!playerHealth.gameOver) {
-            progressBar.value += amount * Time.deltaTime;
+            progress += amount * Time.deltaTime;
+            progressBar.value = progress;
             StartCoroutine(AddProgress(levelSpeed));
         }
         if (progressBar.value >= progressBar.maxValue) {

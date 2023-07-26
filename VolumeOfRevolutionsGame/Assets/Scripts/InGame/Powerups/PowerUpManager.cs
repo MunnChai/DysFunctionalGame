@@ -8,6 +8,7 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] private GameObject playerObject;
 
     public GameObject[] powerUps;
+    public GameObject[] particles;
 
     private PlayerHealth playerHealth;
 
@@ -29,9 +30,13 @@ public class PowerUpManager : MonoBehaviour
         int randInt = Random.Range((int) 0, (int) powerUps.Length);
 
         GameObject powerUp = Instantiate(powerUps[randInt], new Vector3(Random.Range(Constants.leftBound + 50, Constants.rightBound - 50), 
-                                                              Constants.topBound + 3, 0), Quaternion.identity);
+                                                              Constants.topBound + 20, 0), Quaternion.identity);
+        GameObject particle = Instantiate(particles[randInt], powerUp.transform.position, Quaternion.identity);
+
+        particle.GetComponent<PowerupParticles>().SetPowerup(powerUp.GetComponent<PowerUp>());
 
         powerUp.transform.parent = gameObject.transform;
+        particle.transform.parent = gameObject.transform;
 
         if (!playerHealth.gameOver) {
             StartCoroutine(SpawnPowerup());

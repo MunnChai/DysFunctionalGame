@@ -20,7 +20,8 @@ public class BombPowerUp : PowerUp
         collected = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private new void OnTriggerEnter2D(Collider2D other) {
+        base.OnTriggerEnter2D(other);
         if (other.tag == "Player" && !playerHealth.gameOver && !collected) {
             StartCoroutine(Collected());
         }
