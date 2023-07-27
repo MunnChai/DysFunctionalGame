@@ -657,7 +657,7 @@ MonoBehaviour:
   uiManagerObject: {fileID: 1641087089}
   progressBarObject: {fileID: 144399111}
   playerObject: {fileID: 1042836034}
-  levelDuration: 20
+  levelDuration: 90
   progress: 0
 --- !u!1 &122540276
 GameObject:
@@ -765,8 +765,8 @@ RectTransform:
   m_GameObject: {fileID: 140981436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 63383649}
   m_RootOrder: 0
@@ -789,14 +789,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3339622, b: 0.3339622, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a2f11c105e380f44da13e078bb965ba5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6860,6 +6860,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6946,6 +6947,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetFPS: -1
+--- !u!95 &519420034
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 05bf64d9e3692024abc6ec6bb7fef164, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &535000105
 GameObject:
   m_ObjectHideFlags: 0
@@ -7509,6 +7530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffe5c15158a90104e9ead51fb8feeadd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializableHighScores:
+    list: []
 --- !u!1 &784075719
 GameObject:
   m_ObjectHideFlags: 0
@@ -7541,7 +7564,9 @@ MonoBehaviour:
   xEnemy: {fileID: 800267834406422621, guid: 3c2ca4d5005eac64abbb0b020b4d942b, type: 3}
   xSquaredEnemy: {fileID: 0}
   xCubedEnemy: {fileID: 0}
-  spawnInterval: 3
+  spawnStartInterval: 5.5
+  spawnIntervalIncrease: 0.125
+  lowestSpawnInterval: 2.5
   playerObject: {fileID: 1042836034}
 --- !u!4 &784075721
 Transform:
@@ -8251,6 +8276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Canvas: {fileID: 1641087089}
   particleSystem: {fileID: 201316264}
+  camera: {fileID: 519420028}
+  hurtFlash: {fileID: 2020638662582134915, guid: eb7167a0253f4fe4a8a285219c41f547, type: 3}
   maxHealth: 5
   hearts:
   - {fileID: 2009545677}
@@ -8995,7 +9022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 2349186899386290725, guid: 5694d60a76eac4745b7a4b496e3de7ed, type: 3}
   curveWidth: 60
-  acceleration: 20
+  acceleration: 30
   speed: 1
 --- !u!4 &1416129574
 Transform:

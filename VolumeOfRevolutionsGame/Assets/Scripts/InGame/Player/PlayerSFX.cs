@@ -12,7 +12,7 @@ public class PlayerSFX : MonoBehaviour
     }
 
     public void HitSound() {
-        audioSource.PlayOneShot(hit, 1f);
+        audioSource.PlayOneShot(hit, 0.5f);
     }
 
     public void DeathSound() {

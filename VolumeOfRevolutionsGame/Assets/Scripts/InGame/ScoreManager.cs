@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text victoryScoreText;
     [SerializeField] private TMP_Text victoryHitsText;
     [SerializeField] private TMP_Text victoryGradeText;
-    [SerializeField] private Color[] victoryGradeColors;
+    [SerializeField] public Color[] victoryGradeColors;
 
     [SerializeField] private static int hitScoreDeduction = 50000;
 
@@ -68,17 +68,18 @@ public class ScoreManager : MonoBehaviour
         victoryScoreText.text = score.ToString();
         victoryHitsText.text = hits.ToString();
         string grade = CalculateGrade();
+        Color gradeColor = GetGradeColor(grade);
         victoryGradeText.text = grade;
+        victoryGradeText.color = gradeColor;
         UpdateHighScores(LevelSelectMenu.currentLevel.GetName(), grade, score, hits);
         saveData.SaveToJson();
     }
 
-    private string CalculateGrade() {
+    public string CalculateGrade() {
         string grade;
         float percentage = score / 10000;
         if (percentage > 95) {
             grade = "S";
-            victoryGradeText.color = victoryGradeColors[0];
         } else if (percentage > 90) {
             grade = "A";
             victoryGradeText.color = victoryGradeColors[1];
@@ -94,6 +95,28 @@ public class ScoreManager : MonoBehaviour
         }
 
         return grade;
+    }
+
+    public Color GetGradeColor(string grade) {
+        Color color;
+        switch (grade) {
+            case "S":
+                color = victoryGradeColors[0];
+                break;
+            case "A":
+                color = victoryGradeColors[1];
+                break;
+            case "B":
+                color = victoryGradeColors[2];
+                break;
+            case "C":
+                color = victoryGradeColors[3];
+                break;
+            default:
+                color = victoryGradeColors[4];
+                break;
+        }
+        return color;
     }
 
     public static void UpdateHighScores(string levelName, string grade, int score, int hits) {

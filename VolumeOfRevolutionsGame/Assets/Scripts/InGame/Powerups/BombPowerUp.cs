@@ -20,10 +20,11 @@ public class BombPowerUp : PowerUp
         collected = false;
     }
 
-    private new void OnTriggerEnter2D(Collider2D other) {
-        base.OnTriggerEnter2D(other);
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player" && !playerHealth.gameOver && !collected) {
             StartCoroutine(Collected());
+            audioManager.PlaySoundEffect(collectSFX);
+            ScoreManager.AddScore(25000);
         }
     }
 
@@ -36,8 +37,6 @@ public class BombPowerUp : PowerUp
         yield return new WaitForSeconds(duration / 3);
         enemySpawnManager.DestoryAllEnemies();
         mathFunction.DestroyAllCubes();
-        yield return new WaitForSeconds(2 * duration);
-        Destroy(gameObject);
     }
 
     private IEnumerator ExplosionFlash(float duration) {
@@ -69,5 +68,6 @@ public class BombPowerUp : PowerUp
 
         image.color = startColor;
         Destroy(flash);
+        Destroy(gameObject);
     }
 }

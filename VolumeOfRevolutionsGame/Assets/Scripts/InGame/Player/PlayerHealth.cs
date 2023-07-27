@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private GameObject Canvas;
     [SerializeField] private ParticleSystem particleSystem;
+    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject hurtFlash;
 
     [SerializeField] private int maxHealth = 5;
     [SerializeField] private Image[] hearts;
@@ -21,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     private Animator animator;
     private UIManager UIManager;
     private PlayerSFX playerSFX;
+    private Animator cameraAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         UIManager = Canvas.GetComponent<UIManager>();
         playerSFX = gameObject.GetComponent<PlayerSFX>();
+        cameraAnimator = camera.GetComponent<Animator>();
         gameOver = false;
     }
 
@@ -45,6 +49,8 @@ public class PlayerHealth : MonoBehaviour
         if (!playerScript.dashing && !playerScript.invulnerable && !gameOver) {
             health -= damage;
             playerSFX.HitSound();
+            cameraAnimator.SetTrigger("Shake");
+            StartCoroutine(HurtFlash(0.5f));
             if (health <= 0) {
                 StartCoroutine(GameOver());
                 playerSFX.DeathSound();
@@ -87,6 +93,37 @@ public class PlayerHealth : MonoBehaviour
                 hearts[i].sprite = fullHeart;
             }
         }
+    }
+
+    private IEnumerator HurtFlash(float duration) {
+        var flash = Instantiate(hurtFlash, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        var image = flash.GetComponent<SpriteRenderer>();
+        float r = image.color.r;
+        float g = image.color.g;
+        float b = image.color.b;
+
+        Color startColor = new Color(r, g, b, 0);
+        Color newColor = new Color(r, g, b, 0.3f);
+
+        image.color = startColor;
+        for (float t = 0; t < duration / 3; t += Time.deltaTime) {
+            float normalizedTime = t / duration;
+            image.color = Color.Lerp(startColor, newColor, normalizedTime);
+            yield return null;
+        }
+        
+        image.color = newColor;
+        yield return new WaitForSeconds(duration / 3);
+
+        for (float t = 0; t < duration; t += Time.deltaTime) {
+            float normalizedTime = t / duration;
+            image.color = Color.Lerp(newColor, startColor, normalizedTime);
+            yield return null;
+        }
+
+        image.color = startColor;
+        Destroy(flash);
     }
 }
 

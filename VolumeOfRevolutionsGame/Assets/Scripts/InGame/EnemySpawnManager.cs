@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject xEnemy, xSquaredEnemy, xCubedEnemy;
-    [SerializeField] private float spawnInterval;
+    [SerializeField] private float spawnStartInterval;
+    [SerializeField] private float spawnIntervalIncrease;
+    [SerializeField] private float lowestSpawnInterval;
 
     [SerializeField] private GameObject playerObject;
 
@@ -17,7 +19,7 @@ public class EnemySpawnManager : MonoBehaviour
     void Start()
     {
         playerHealthScript = playerObject.GetComponent<PlayerHealth>();
-        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy(spawnStartInterval));
     }
 
     public void DestoryAllEnemies() {
@@ -26,8 +28,8 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemy() {
-        yield return new WaitForSeconds(spawnInterval);
+    private IEnumerator SpawnEnemy(float interval) {
+        yield return new WaitForSeconds(interval);
         float yPos;
         float randomNum = Random.Range((int) 0, (int) 2);
         if (randomNum == 0) {
@@ -43,7 +45,11 @@ public class EnemySpawnManager : MonoBehaviour
         newEnemy.transform.parent = gameObject.transform;
         
         if (!playerHealthScript.gameOver) {
-            StartCoroutine(SpawnEnemy());
+            float newInterval = interval - spawnIntervalIncrease;
+            if (newInterval < lowestSpawnInterval) {
+                newInterval = lowestSpawnInterval;
+            }
+            StartCoroutine(SpawnEnemy(newInterval));
         } else {
             DestoryAllEnemies();
         }

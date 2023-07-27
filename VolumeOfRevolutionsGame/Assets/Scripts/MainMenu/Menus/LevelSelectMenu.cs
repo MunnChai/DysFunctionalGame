@@ -9,10 +9,12 @@ public class LevelSelectMenu : Menu
     [SerializeField] private GameObject levelTitleObject2;
     [SerializeField] private GameObject menuBackgroundObject;
     [SerializeField] private Color[] levelColors;
+    [SerializeField] private GameObject levelPreviewObject;
 
     [SerializeField] private GameObject gradeObject;
     [SerializeField] private GameObject scoreObject;
     [SerializeField] private GameObject hitsObject;
+    [SerializeField] public Color[] gradeColors;
     private TMP_Text levelTitle1;
     private TMP_Text levelTitle2;
     private TMP_Text activeTitle;
@@ -21,10 +23,12 @@ public class LevelSelectMenu : Menu
     private TMP_Text score;
     private TMP_Text hits;
     private MenuBackGround menuBackground;
+    private LevelPreview levelPreview;
     private bool onCooldown = false;
     private float selectCooldown = 0.2f;
+    private Coroutine previewCoroutine;
 
-    private ArrayList levels = new ArrayList();
+    [SerializeField] private ArrayList levels = new ArrayList();
     public static Level currentLevel;
     private int currentIndex;
 
@@ -33,6 +37,7 @@ public class LevelSelectMenu : Menu
     // Start is called before the first frame update
     void Start()
     {
+        levelPreview = levelPreviewObject.GetComponent<LevelPreview>();
         levelTitle1 = levelTitleObject1.GetComponent<TMP_Text>();
         levelTitle2 = levelTitleObject2.GetComponent<TMP_Text>();
         menuBackground = menuBackgroundObject.GetComponent<MenuBackGround>();
@@ -77,6 +82,9 @@ public class LevelSelectMenu : Menu
 
     // Sets active level to given level
     private void SetLevel(Level level) {
+        if (previewCoroutine != null) {
+            StopCoroutine(previewCoroutine);
+        }
         (activeTitle, inactiveTitle) = (inactiveTitle, activeTitle);
         currentLevel = level;
         activeTitle.text = level.GetName().ToUpper();
@@ -87,10 +95,34 @@ public class LevelSelectMenu : Menu
         foreach(LevelHighscore levelHighscore in SaveData.highScores) {
             if (levelHighscore.levelName == currentLevel.GetName()) {
                 grade.text = levelHighscore.grade;
+                grade.color = GetGradeColor(grade.text);
                 score.text = levelHighscore.score.ToString();
                 hits.text = levelHighscore.hits.ToString();
             }
         }
+        previewCoroutine = StartCoroutine(levelPreview.UpdatePreview(currentLevel));
+    }
+
+    public Color GetGradeColor(string grade) {
+        Color color;
+        switch (grade) {
+            case "S":
+                color = gradeColors[0];
+                break;
+            case "A":
+                color = gradeColors[1];
+                break;
+            case "B":
+                color = gradeColors[2];
+                break;
+            case "C":
+                color = gradeColors[3];
+                break;
+            default:
+                color = gradeColors[4];
+                break;
+        }
+        return color;
     }
 
     private IEnumerator StartCooldown(float seconds) {
@@ -115,4 +147,6 @@ public class LevelSelectMenu : Menu
         }
         text.color = newColor; 
     }
+
+
 }

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 0}
-  fallSpeed: 10
+  fallSpeed: 30
   collectSFX: {fileID: 8300000, guid: ef32b156dc073d04e8507c82d697e689, type: 3}
 --- !u!58 &7121715626275787648
 CircleCollider2D:

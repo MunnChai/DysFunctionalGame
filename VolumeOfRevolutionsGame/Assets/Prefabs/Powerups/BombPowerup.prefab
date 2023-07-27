@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 0}
-  fallSpeed: 20
+  fallSpeed: 50
   collectSFX: {fileID: 8300000, guid: a919cdd4e8259424e82f4efbed0ee394, type: 3}
   flashObject: {fileID: 2020638662582134915, guid: 61562ca1b1732b74791277eeeae2596f, type: 3}
   flashColor: {r: 0.99607843, g: 0.90588236, b: 0.38039216, a: 0}

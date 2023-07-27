@@ -18,18 +18,14 @@ public class SaveData : MonoBehaviour
 
         string saveData = JsonUtility.ToJson(serializableHighScores);
         string filePath = Application.persistentDataPath + "/HighScoreData.json";
-        Debug.Log(filePath);
 
         System.IO.File.WriteAllText(filePath, saveData);
-        Debug.Log(saveData);
-        Debug.Log("Saved");
     }
 
     public void LoadFromJson() {
         string filePath = Application.persistentDataPath + "/HighScoreData.json";
         string saveData = System.IO.File.ReadAllText(filePath);
         highScores = JsonUtility.FromJson<SerializableList<LevelHighscore>>(saveData).list;
-        Debug.Log("Loaded");
     }
 }
 

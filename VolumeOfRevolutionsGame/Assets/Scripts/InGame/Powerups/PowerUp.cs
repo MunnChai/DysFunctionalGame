@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] protected GameObject playerObject;
     [SerializeField] public float fallSpeed;
-    [SerializeField] private AudioClip collectSFX;
+    [SerializeField] protected AudioClip collectSFX;
 
     protected Player player;
     protected PlayerHealth playerHealth;
@@ -27,13 +27,6 @@ public class PowerUp : MonoBehaviour
         transform.position += new Vector3(0, -fallSpeed * Time.deltaTime, 0);
         if (transform.position.y <= Constants.bottomBound - transform.localScale.y / 2) {
             Destroy(gameObject);
-        }
-    }
-
-    protected void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Player") {
-            audioManager.PlaySoundEffect(collectSFX);
-            ScoreManager.AddScore(25000);
         }
     }
 }
