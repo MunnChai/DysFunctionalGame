@@ -8,6 +8,7 @@ public abstract class Enemy : MonoBehaviour
     protected GameObject enemySpawnManager;
     protected Enemy enemy;
     protected float xMultiplier;
+    protected float xCorrection;
     protected float yMultiplier;
     protected float angle;
     [SerializeField] protected float speed;
@@ -35,8 +36,10 @@ public abstract class Enemy : MonoBehaviour
         float yDist = player.transform.position.y - transform.position.y;
         if (xDist > 0) {
             xMultiplier = 1;
+            xCorrection = 0;
         } else if (xDist < 0) {
             xMultiplier = -1;
+            xCorrection = 180;
         }
         if (yDist > 0) {
             yMultiplier = 1;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject xEnemy, xSquaredEnemy, xCubedEnemy;
+    [SerializeField] private GameObject[] enemyTypes;
     [SerializeField] private float spawnStartInterval;
     [SerializeField] private float spawnIntervalIncrease;
     [SerializeField] private float lowestSpawnInterval;
@@ -38,8 +38,11 @@ public class EnemySpawnManager : MonoBehaviour
             yPos = Constants.bottomBound - 20;
         }
 
-        GameObject newEnemy = Instantiate(xEnemy, new Vector3(Random.Range(Constants.leftBound, Constants.rightBound), 
-                                                              yPos, 0), Quaternion.identity);
+        int randomEnemyIndex = Random.Range((int) 0, (int) enemyTypes.Length);
+
+        GameObject newEnemy = Instantiate(enemyTypes[randomEnemyIndex], 
+                                        new Vector3(Random.Range(Constants.leftBound, Constants.rightBound), yPos, 0), 
+                                        Quaternion.identity);
 
         enemies.Add(newEnemy);
         newEnemy.transform.parent = gameObject.transform;

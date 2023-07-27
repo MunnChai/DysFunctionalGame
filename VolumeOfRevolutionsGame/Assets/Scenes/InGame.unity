@@ -7561,9 +7561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3bc654519d9f2444a91d0fd3c10f7a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xEnemy: {fileID: 800267834406422621, guid: 3c2ca4d5005eac64abbb0b020b4d942b, type: 3}
-  xSquaredEnemy: {fileID: 0}
-  xCubedEnemy: {fileID: 0}
+  enemyTypes:
+  - {fileID: 800267834406422621, guid: 3c2ca4d5005eac64abbb0b020b4d942b, type: 3}
+  - {fileID: 5544471603791436420, guid: dc0b7ff30a9977047804e2124b5551b1, type: 3}
   spawnStartInterval: 5.5
   spawnIntervalIncrease: 0.125
   lowestSpawnInterval: 2.5

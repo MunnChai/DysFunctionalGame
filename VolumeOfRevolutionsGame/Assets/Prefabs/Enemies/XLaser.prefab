@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2931460532379752761}
   - component: {fileID: 3468164372223425800}
   m_Layer: 0
-  m_Name: LaserEnemy
+  m_Name: XLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

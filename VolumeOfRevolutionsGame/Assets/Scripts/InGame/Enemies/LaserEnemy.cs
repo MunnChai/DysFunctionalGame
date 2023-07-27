@@ -31,7 +31,7 @@ public class LaserEnemy : Enemy
             
         } 
         var laserParticles = Instantiate(particleSystem, transform.position, Quaternion.identity);
-        laserParticles.GetComponent<LaserParticles>().RotateToPlayer(angle * 180 / Mathf.PI);
+        laserParticles.GetComponent<LaserParticles>().RotateToPlayer(angle * 180 / Mathf.PI + xCorrection);
         laserParticles.transform.parent = particleManager.transform;
     }
 
@@ -56,6 +56,6 @@ public class LaserEnemy : Enemy
 
     // Set rotation towards player
     private void RotateToPlayer() {
-        transform.Rotate(new Vector3(0, 0, angle * 180 / Mathf.PI), Space.World);
+        transform.Rotate(new Vector3(0, 0, angle * 180 / Mathf.PI + xCorrection), Space.World);
     }
 }

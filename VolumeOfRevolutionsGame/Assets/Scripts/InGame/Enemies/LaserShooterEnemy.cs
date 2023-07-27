@@ -7,7 +7,7 @@ public class LaserShooterEnemy : Enemy
 {
     
 
-    [SerializeField] private float fireRate = 1;
+    [SerializeField] private float fireRate;
     [SerializeField] private float defaultSpeed = 100;
 
     public GameObject laserPrefab;
@@ -25,7 +25,7 @@ public class LaserShooterEnemy : Enemy
         } catch (NullReferenceException e) {
             
         }  
-        InvokeRepeating("ShootLaser", fireRate, 3);
+        InvokeRepeating("ShootLaser", 1, fireRate);
     }
 
     // Update is called once per frame
@@ -47,6 +47,4 @@ public class LaserShooterEnemy : Enemy
         laser.transform.parent = enemySpawnManager.transform;
         enemySpawnManager.GetComponent<EnemySpawnManager>().enemies.Add(laser);
     }
-
-    
 }
