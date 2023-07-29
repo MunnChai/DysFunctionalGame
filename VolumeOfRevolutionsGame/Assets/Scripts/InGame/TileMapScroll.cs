@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,12 @@ public class TileMapScroll : MonoBehaviour
     void Start()
     {
         tileMap = gameObject.GetComponent<Tilemap>();
-
-        tileMap.color = LevelSelectMenu.currentLevel.GetColor();
+        try {
+            tileMap.color = LevelSelectMenu.currentLevel.GetColor();
+        } catch (Exception e) {
+            Debug.Log("No Level Selected");
+        }
+        
     }
 
     // Update is called once per frame

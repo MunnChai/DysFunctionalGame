@@ -7,15 +7,15 @@ public class LaserShooterEnemy : Enemy
 {
     
 
-    [SerializeField] private float fireRate;
-    [SerializeField] private float defaultSpeed = 100;
+    [SerializeField] protected float fireRate;
+    [SerializeField] protected float defaultSpeed = 100;
 
     public GameObject laserPrefab;
 
-    private float spinDirection;
+    protected float spinDirection;
 
     // Start is called before the first frame update
-    protected new void Start() {
+    private new void Start() {
         base.Start();
         speed = defaultSpeed;
         spinDirection = UnityEngine.Random.Range(-10, 10);
@@ -34,7 +34,7 @@ public class LaserShooterEnemy : Enemy
         transform.Rotate(new Vector3(0, 0, spinDirection * Time.deltaTime));
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
+    protected void OnTriggerStay2D(Collider2D other) {
         if (other.tag == "Player") {
             PlayerHealth playerHealthScript = other.gameObject.GetComponent<PlayerHealth>();
             playerHealthScript.TakeDamage(1);

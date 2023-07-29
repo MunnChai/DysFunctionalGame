@@ -33,15 +33,18 @@ public class BombPowerUp : PowerUp
         collected = true;
 
         var duration = 0.6f;
-        StartCoroutine(ExplosionFlash(duration));
+        var flash = Instantiate(flashObject, new Vector3(0, 0, 0), Quaternion.identity);
+        flash.transform.parent = gameObject.transform;
+        StartCoroutine(ExplosionFlash(duration, flash));
         yield return new WaitForSeconds(duration / 3);
         enemySpawnManager.DestoryAllEnemies();
         mathFunction.DestroyAllCubes();
+        yield return new WaitForSeconds(2 * duration);
+        Destroy(gameObject);
     }
 
-    private IEnumerator ExplosionFlash(float duration) {
-        var flash = Instantiate(flashObject, new Vector3(0, 0, 0), Quaternion.identity);
-        
+    private IEnumerator ExplosionFlash(float duration, GameObject flash) {
+
         var image = flash.GetComponent<SpriteRenderer>();
         float r = image.color.r;
         float g = image.color.g;
@@ -67,7 +70,5 @@ public class BombPowerUp : PowerUp
         }
 
         image.color = startColor;
-        Destroy(flash);
-        Destroy(gameObject);
     }
 }

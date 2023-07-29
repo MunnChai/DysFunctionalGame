@@ -16,16 +16,9 @@ public class PowerUpManager : MonoBehaviour
     void Start()
     {
         playerHealth = playerObject.GetComponent<PlayerHealth>();
-        StartCoroutine(SpawnPowerup());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private IEnumerator SpawnPowerup() {
+    public IEnumerator SpawnPowerup() {
         yield return new WaitForSeconds(powerUpInterval);
         int randInt = Random.Range((int) 0, (int) powerUps.Length);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class LevelSelectMenu : Menu
@@ -10,11 +11,18 @@ public class LevelSelectMenu : Menu
     [SerializeField] private GameObject menuBackgroundObject;
     [SerializeField] private Color[] levelColors;
     [SerializeField] private GameObject levelPreviewObject;
+    [SerializeField] private GameObject enemyPanelObject;
 
     [SerializeField] private GameObject gradeObject;
     [SerializeField] private GameObject scoreObject;
     [SerializeField] private GameObject hitsObject;
     [SerializeField] public Color[] gradeColors;
+
+    [SerializeField] private GameObject rightButton;
+    [SerializeField] private GameObject leftButton;
+    [SerializeField] private GameObject backButton;
+
+    [SerializeField] private GameObject xEnemy, x2Enemy, x3Enemy;
     private TMP_Text levelTitle1;
     private TMP_Text levelTitle2;
     private TMP_Text activeTitle;
@@ -24,6 +32,8 @@ public class LevelSelectMenu : Menu
     private TMP_Text hits;
     private MenuBackGround menuBackground;
     private LevelPreview levelPreview;
+    private EnemiesPanel enemyPanel;
+
     private bool onCooldown = false;
     private float selectCooldown = 0.2f;
     private Coroutine previewCoroutine;
@@ -41,6 +51,7 @@ public class LevelSelectMenu : Menu
         levelTitle1 = levelTitleObject1.GetComponent<TMP_Text>();
         levelTitle2 = levelTitleObject2.GetComponent<TMP_Text>();
         menuBackground = menuBackgroundObject.GetComponent<MenuBackGround>();
+        enemyPanel = enemyPanelObject.GetComponent<EnemiesPanel>();
         grade = gradeObject.GetComponent<TMP_Text>();
         score = scoreObject.GetComponent<TMP_Text>();
         hits = hitsObject.GetComponent<TMP_Text>();
@@ -49,14 +60,28 @@ public class LevelSelectMenu : Menu
         var tempColor = inactiveTitle.color;
         inactiveTitle.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0);
 
-        levels.Add(new Level("Sin(x)", (Color) levelColors[0]));
-        levels.Add(new Level("Cos(x)", (Color) levelColors[1]));
-        levels.Add(new Level("Tan(x)", (Color) levelColors[2]));
-        levels.Add(new Level("Sin(x)+Cos(2x+2)", (Color) levelColors[3]));
+        levels.Add(new Level("Sin(x)", (Color) levelColors[0], 1, xEnemy, xEnemy, xEnemy));
+        levels.Add(new Level("Cos(x)", (Color) levelColors[1], 2, xEnemy, xEnemy, x2Enemy));
+        levels.Add(new Level("Tan(x)", (Color) levelColors[2], 3, xEnemy, xEnemy, x3Enemy));
+        levels.Add(new Level("Sin(x)+Cos(2x+2)", (Color) levelColors[3], 3, xEnemy, x2Enemy, x3Enemy));
         numLevels = 4;
 
         SetLevel((Level) levels[0]);
         currentIndex = 0;
+    }
+
+    void Update() {
+        if (!onCooldown) {
+            if (Input.GetKeyDown(KeyCode.A)) {
+                leftButton.GetComponent<Button>().onClick.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.D)) {
+                rightButton.GetComponent<Button>().onClick.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                backButton.GetComponent<Button>().onClick.Invoke();
+            }
+        }
     }
 
     // Sets current level to next level in arraylist of levels
@@ -101,6 +126,7 @@ public class LevelSelectMenu : Menu
             }
         }
         previewCoroutine = StartCoroutine(levelPreview.UpdatePreview(currentLevel));
+        enemyPanel.UpdatePanel();
     }
 
     public Color GetGradeColor(string grade) {

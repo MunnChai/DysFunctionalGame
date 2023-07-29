@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class LaserEnemy : Enemy
 {
-    [SerializeField] private ParticleSystem particleSystem;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip laserCharge, laserShoot;
+    [SerializeField] protected ParticleSystem particleSystem;
+    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected AudioClip laserCharge, laserShoot;
 
-    private GameObject particleManager;
+    protected GameObject particleManager;
 
-    private static float chargeDuration = 1f;
-    private static float fireDuration = 0.8f;
-    private Animator animator;
+    protected static float chargeDuration = 1f;
+    protected static float fireDuration = 0.8f;
+    protected Animator animator;
 
-    private bool activated;
+    protected bool activated;
 
     // Start is called before the first frame update
-    protected new void Start() {
+    private new void Start() {
         base.Start();
         particleManager = GameObject.Find("ParticleManager");
         animator = gameObject.GetComponent<Animator>();

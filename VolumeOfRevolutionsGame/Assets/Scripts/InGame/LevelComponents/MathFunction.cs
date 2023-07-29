@@ -20,18 +20,23 @@ public class MathFunction : MonoBehaviour
     {
         currentX = 0;
         speed = 32;
-        InvokeRepeating("DrawCubes", 3.0f, 0.2f);
     }
 
-    public void DrawCubes() {
+    public IEnumerator DrawCubes() {
+        yield return new WaitForSeconds(0.2f);
         float yPos = PickFunction(currentX) * (Constants.topBound - Constants.bottomBound) / 2 + 20;
         var cubeObject = Instantiate(cube, new Vector3(Constants.rightBound + cube.transform.localScale.x / 2, yPos, 0), Quaternion.identity);
         var image = cubeObject.GetComponent<SpriteRenderer>();
-        image.color = LevelSelectMenu.currentLevel.GetColor();
+        try {
+            image.color = LevelSelectMenu.currentLevel.GetColor();
+        } catch (Exception e) {
+            // Pass
+        }
         cubeObject.transform.parent = gameObject.transform;
         cubes.Add(cubeObject);
         currentX += speed / (curveWidth * Mathf.PI);
         speed += acceleration * Time.deltaTime;
+        StartCoroutine(DrawCubes());
     }
 
     public void DestroyAllCubes() {
@@ -42,7 +47,14 @@ public class MathFunction : MonoBehaviour
 
     private float PickFunction(float x) {
         float num;
-        switch (LevelSelectMenu.currentLevel.GetName()) {
+        string levelName = "";
+        try {
+            levelName = LevelSelectMenu.currentLevel.GetName();
+        } catch (Exception e) {
+            // Pass
+        }
+        
+        switch (levelName) {
             case "Sin(x)":
                 num = Mathf.Sin(x);
                 break;

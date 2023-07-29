@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] enemyTypes;
     [SerializeField] private float spawnStartInterval;
     [SerializeField] private float spawnIntervalIncrease;
     [SerializeField] private float lowestSpawnInterval;
@@ -19,7 +18,6 @@ public class EnemySpawnManager : MonoBehaviour
     void Start()
     {
         playerHealthScript = playerObject.GetComponent<PlayerHealth>();
-        StartCoroutine(SpawnEnemy(spawnStartInterval));
     }
 
     public void DestoryAllEnemies() {
@@ -28,7 +26,7 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemy(float interval) {
+    public IEnumerator SpawnEnemy(float interval) {
         yield return new WaitForSeconds(interval);
         float yPos;
         float randomNum = Random.Range((int) 0, (int) 2);
@@ -37,10 +35,12 @@ public class EnemySpawnManager : MonoBehaviour
         } else {
             yPos = Constants.bottomBound - 20;
         }
+        
+        int randomEnemyIndex = Random.Range((int) 0, (int) 3);
 
-        int randomEnemyIndex = Random.Range((int) 0, (int) enemyTypes.Length);
+        var currentLevelEnemies = LevelSelectMenu.currentLevel.GetEnemies();
 
-        GameObject newEnemy = Instantiate(enemyTypes[randomEnemyIndex], 
+        GameObject newEnemy = Instantiate(currentLevelEnemies[randomEnemyIndex], 
                                         new Vector3(Random.Range(Constants.leftBound, Constants.rightBound), yPos, 0), 
                                         Quaternion.identity);
 

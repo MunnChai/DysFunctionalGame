@@ -33,8 +33,6 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         hits = 0;
         scoreGainSpeed = Mathf.RoundToInt(1000000 / levelManager.levelDuration);
-
-        StartCoroutine(PassiveScoreGain());
     }
 
     public static void AddScore(int amount) {
@@ -53,7 +51,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private IEnumerator PassiveScoreGain() {
+    public IEnumerator PassiveScoreGain() {
         yield return null;
         if (!playerHealth.gameOver) {
             score += Mathf.RoundToInt(scoreGainSpeed * Time.deltaTime);
